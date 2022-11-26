@@ -3,15 +3,13 @@ import { store } from "../../store";
 import { fetchItem } from "../../store/dispatches/item.dispatch";
 import AddItem from "../AddItem/AddItem";
 import Items from "../Items/Items";
+import { RadioButton } from "../Radio/Radio";
 import styles from "./ToDo.module.scss";
-import Pagination from 'react-bootstrap/Pagination';
-import { render } from "@testing-library/react";
 
-const itemsOnPage=5;
 function ToDo() {
   const [items, setItems] = useState([]);
   const [isItemsUpdate, setIsItemsUpdate] = useState(0);
-  const [active, setActive]=useState(1);
+  const [sortMethod, setSortMethod] = useState("sortName");
 
   const updateItems = (isUpdate) => {
     if (isUpdate) {
@@ -20,7 +18,6 @@ function ToDo() {
   };
 
   async function getItems() {
-
     const data = await store.dispatch(fetchItem());
 
     if (data.payload) {
@@ -33,31 +30,40 @@ function ToDo() {
     getItems();
   }, [isItemsUpdate]);
 
- 
-let pages = [];
-for (let number = 1; number <= Math.ceil(items.length/itemsOnPage); number++) {
-  pages.push(
-    <Pagination.Item key={number} active={number === active} onClick={()=>{setActive(number)}}>
-      {number}
-    </Pagination.Item>,
-  );
-}
-
-
+  const radioChangeHandler = (e) => {
+    setSortMethod(e.target.value);
+  };
 
   return (
-    
     <section>
       <div className="container">
         <h1 className={styles.title}>Додати нову задачу:</h1>
+        <div className={styles.radio}>
+          <p>Відсортувати задачі за:</p>
+          <div className={styles.RadioButton} style={{ display: "flex" }}>
+            <RadioButton
+              changed={radioChangeHandler}
+              id="1"
+              isSelected={sortMethod === "sortName"}
+              label="назвою"
+              value="sortName"
+            />
+
+            <RadioButton
+              changed={radioChangeHandler}
+              id="2"
+              isSelected={sortMethod === "sortCheched"}
+              label="міткою"
+              value="sortCheched"
+            />
+          </div>
+        </div>
         <div className={styles.todoWrap}>
           <AddItem updateItems={updateItems} />
-          <Items items={items.slice((active-1)*itemsOnPage, active*itemsOnPage)} updateItems={updateItems} />
+          <Items items={items} updateItems={updateItems} sortMethod={sortMethod} />
         </div>
-        <Pagination size="sm" className={styles.pag}>{pages}</Pagination>
       </div>
     </section>
-    
   );
 }
 

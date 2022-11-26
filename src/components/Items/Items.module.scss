@@ -3,24 +3,26 @@
   grid-template-rows: auto;
   gap: 20px;
 }
+
 .search_bar {
-      display: grid;
-    
+  display: grid;
+
   form {
     display: flex;
     justify-content: center;
     width: 100%;
-    input{
+
+    input {
       display: block;
-    width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    
-    border: 1px solid #ced4da;
-    appearance: none;
-    border-radius: 0.375rem;
+      width: 100%;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+
+      border: 1px solid #ced4da;
+      appearance: none;
+      border-radius: 0.375rem;
     }
 
     button {
@@ -30,4 +32,8 @@
       margin-left: 15px;
     }
   }
+}
+
+.pag {
+  margin-left: 20vw;
 }

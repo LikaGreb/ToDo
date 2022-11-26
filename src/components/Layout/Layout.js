@@ -12,7 +12,7 @@ function Layout(props) {
       <footer>
         <div className="container">
           <p className={styles["footer-wrap"]}>
-            created by
+            created by Lika Greben
           </p>
         </div>
       </footer>

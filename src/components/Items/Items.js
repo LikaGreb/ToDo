@@ -4,17 +4,24 @@ import { store } from "../../store";
 import Item from "../Item/Item";
 import styles from "./Items.module.scss";
 import { fetchSearch } from "../../store/dispatches/search.dispatch";
+import Pagination from "react-bootstrap/Pagination";
 
-function Items({ items, updateItems }) {
+const itemsOnPage = 5;
+
+function Items({ items, updateItems, sortMethod }) {
   const [term, setTerm] = useState("");
   const [error, setError] = useState("");
   const [filter, setItemsFiltered] = useState([]);
-  useEffect(() => { setItemsFiltered(items) }, [items]);
+  const [active, setActive] = useState(1);
+
+  useEffect(() => {
+    setItemsFiltered(items);
+  }, [items]);
   const reset = () => {
     setItemsFiltered(items);
-   setTerm("");
+    setTerm("");
   };
-  console.log(filter);
+
   const showMessage = (message) => {
     setError(message);
     setTimeout(() => {
@@ -27,24 +34,60 @@ function Items({ items, updateItems }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(term);
+
     const res = store.dispatch(fetchSearch(term));
-    console.log(res);
 
     if (res.type === "SEARCH_SUCCESS") {
       setItemsFiltered(res.payload);
-
-    }
-    else if (res.type === "SEARCH_ERROR_NO_MATHES") {
+    } else if (res.type === "SEARCH_ERROR_NO_MATHES") {
       showMessage(res.payload);
-      
-    }
-
-    else {
+    } else {
       showMessage(res.payload);
-      
     }
   };
+
+  let pages = [];
+  if (term !== "") {
+    for (
+      let number = 1;
+      number <= Math.ceil(filter.length / itemsOnPage);
+      number++
+    ) {
+      pages.push(
+        <Pagination.Item
+          key={number}
+          active={number === active}
+          onClick={() => {
+            setActive(number);
+          }}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+  } else {
+    for (
+      let number = 1;
+      number <= Math.ceil(items.length / itemsOnPage);
+      number++
+    ) {
+      pages.push(
+        <Pagination.Item
+          key={number}
+          active={number === active}
+          onClick={() => {
+            setActive(number);
+          }}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+  }
+
+  const myFilter = []
+    .concat(filter)
+    .sort((a, b) => (a.checked > b.checked ? 1 : -1));
 
   return (
     <>
@@ -59,6 +102,7 @@ function Items({ items, updateItems }) {
               setTerm(e.target.value);
             }}
           />
+
           <Button type="submit" variant="outline-primary">
             Пошук
           </Button>
@@ -69,16 +113,35 @@ function Items({ items, updateItems }) {
       </div>
       <div>
         <ul className={styles.items}>
-          {filter.map((item, i) => (
-            <Item
-              key={`${item.text}-${i}`}
-              item={item}
-              updateItems={updateItems}
-              messageError={messageError}
-            />
-          ))
+          {sortMethod==="sortCheched"?
+            []
+            .concat(filter)
+            .sort((a, b) => (a.checked > b.checked ? 1 : -1))
+            .slice((active - 1) * itemsOnPage, active * itemsOnPage)
+            .map((item, i) => (
+              <Item
+                key={`${item.text}-${i}`}
+                item={item}
+                updateItems={updateItems}
+                messageError={messageError}
+              />
+            )): []
+            .concat(filter)
+            .sort((a, b) => (a.text > b.text ? 1 : -1))
+            .slice((active - 1) * itemsOnPage, active * itemsOnPage)
+            .map((item, i) => (
+              <Item
+                key={`${item.text}-${i}`}
+                item={item}
+                updateItems={updateItems}
+                messageError={messageError}
+              />
+            ))
           }
         </ul>
+        <Pagination size="sm" className={styles.pag}>
+          {pages}
+        </Pagination>
       </div>
     </>
   );
