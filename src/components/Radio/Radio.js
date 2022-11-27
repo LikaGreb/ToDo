@@ -1,7 +1,9 @@
+import styles from "./Radio.module.scss"
+
 export const RadioButton = (props) => {
   const { changed, id, isSelected, label, value } = props;
   return (
-    <div className="RadioButton">
+    <div className={styles.RadioButton}>
       <input
         id={id}
         onChange={changed}

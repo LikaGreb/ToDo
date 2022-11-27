@@ -1,5 +1,14 @@
 .inputNewTask{
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 40px;
+  display: flex;
+ width:100%;
+ justify-content: space-between;
+ margin-bottom: 20px;
+  input{
+   
+    width: 65%;
+  }
+  button{
+    width: 30%;
+    
+  }
 }

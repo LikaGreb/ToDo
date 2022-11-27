@@ -1,6 +1,6 @@
-$md-radio-checked-color: rgb(51, 122, 183);
-$md-radio-border-color: rgba(0, 0, 0, 0.54);
-$md-radio-size: 20px;
+//$md-radio-checked-color: rgb(80, 99, 116);
+//$md-radio-border-color: rgba(0, 0, 0, 0.54);
+//$md-radio-size: 2%;
 $md-radio-checked-size: 10px;
 $md-radio-ripple-size: 15px;
 .title {
@@ -8,10 +8,11 @@ $md-radio-ripple-size: 15px;
 }
 .todoWrap {
   padding-top: 10px;
-  display: grid;
-  gap: 40px;
+  display: flex;
+  flex-direction: column;
+ margin-bottom: 10px;
   margin: 0 auto;
-  grid-template-rows: auto auto;
+  
   justify-content: center;
 }
 *,
@@ -30,21 +31,8 @@ $md-radio-ripple-size: 15px;
   grid-template-rows: auto auto;
   justify-content: center;
   font-size: 1rem;
-  p {
-    margin-top: 15px;
-  }
+  
 }
 
-.RadioButton {
-  margin: 16px 0;
 
-  label {
-    display: inline-block;
-    height: $md-radio-size;
-    position: relative;
-    padding: 0 ($md-radio-size + 10px);
-    margin-bottom: 5px;
-    cursor: pointer;
-    vertical-align: bottom;
-  }
-}
+

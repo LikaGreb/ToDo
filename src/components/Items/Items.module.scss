@@ -6,7 +6,7 @@
 
 .search_bar {
   display: grid;
-
+margin-bottom: 20px;
   form {
     display: flex;
     justify-content: center;
@@ -35,5 +35,23 @@
 }
 
 .pag {
-  margin-left: 20vw;
+  align-self: center;
+}
+@media only screen and (max-width: 599px) {
+  
+    .items {
+  display: grid;
+  grid-template-columns: auto ;
+  gap: 20px;
+}
+ 
+}
+@media only screen and (min-width: 600px) and (max-width: 999px) {
+  
+    .items {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px;
+}
+ 
 }

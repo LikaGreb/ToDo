@@ -3,9 +3,8 @@ import { store } from "../../store";
 import { fetchLogout } from "../../store/dispatches/logout.dispatch";
 import styles from "./Header.module.scss";
 
-function Header({ toggleLogin }) {
+function Header({ toggleLogin}) {
 
-  // Приймаємо глобальні значення lang  за допомогою хука useContext
   const logoutFunction = async () => {
     const data = await store.dispatch(fetchLogout());
 
@@ -16,11 +15,14 @@ function Header({ toggleLogin }) {
       console.log(data.payload);
     }
   };
+ 
   return (
     <header>
       <div className="container">
         <div className={styles.header} onClick={logoutFunction}>
+          <p className={styles.loginName}>{localStorage.getItem("loginField")}</p>
           <Button variant="primary">Logout</Button>
+          
         </div>
       </div>
     </header>

@@ -1,5 +1,5 @@
 import { searchTypes } from "../types/search.types"
-import instance from "../../api/request";
+
 import { store } from "../index";
 
 

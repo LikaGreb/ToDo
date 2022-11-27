@@ -27,7 +27,8 @@ function Login({ toggleLogin }) {
     } else {
       showMessage(data.payload);
     }
-
+    console.log(loginField.value);
+    localStorage.setItem("loginField", loginField.value);
   };
   return (
     <section className="login">

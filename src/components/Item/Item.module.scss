@@ -3,7 +3,7 @@
   grid-template-columns: 20px 1fr auto auto auto;
   gap: 20px;
   align-items: center;
-  width: 600px;
+  width: 100%;
   border: 1px solid gray;
   border-radius: 4px;
   padding: 10px 20px;
@@ -13,4 +13,21 @@
 }
 .checked{
   text-decoration: line-through ;
+}
+@media only screen and (min-width: 600px) and (max-width: 999px) {
+ 
+    .item{
+  display: grid;
+  grid-template-columns: 20px 1fr auto auto auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+.btn{
+  display: none;
+ }
+ 
 }

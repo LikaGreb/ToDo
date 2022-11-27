@@ -61,7 +61,7 @@ function Item({ item, updateItems, messageError }) {
           onKeyPress={keyPressHandler}
         />
       )}
-      <Button
+      <Button 
         variant="outline-warning"
         onClick={() => {
           setIsEdit((prev) => !prev);
@@ -69,13 +69,13 @@ function Item({ item, updateItems, messageError }) {
       >
         Edit
       </Button>
-      <Button
+      <Button 
         variant="outline-success"
         onClick={() => editItem(item.id, item.checked, textField.value)}
       >
         Save
       </Button>
-      <Button variant="outline-danger" onClick={() => deleteItem(item.id)}>
+      <Button className={styles.btn} variant="outline-danger" onClick={() => deleteItem(item.id)}>
         Delete
       </Button>
     </li>

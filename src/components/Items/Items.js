@@ -85,9 +85,7 @@ function Items({ items, updateItems, sortMethod }) {
     }
   }
 
-  const myFilter = []
-    .concat(filter)
-    .sort((a, b) => (a.checked > b.checked ? 1 : -1));
+  
 
   return (
     <>
@@ -139,10 +137,11 @@ function Items({ items, updateItems, sortMethod }) {
             ))
           }
         </ul>
-        <Pagination size="sm" className={styles.pag}>
+       
+      </div>
+      <Pagination size="sm" className={styles.pag}>
           {pages}
         </Pagination>
-      </div>
     </>
   );
 }
