@@ -6,9 +6,10 @@ import styles from "./Items.module.scss";
 import { fetchSearch } from "../../store/dispatches/search.dispatch";
 import Pagination from "react-bootstrap/Pagination";
 
+
 const itemsOnPage = 5;
 
-function Items({ items, updateItems, sortMethod }) {
+function Items({ items, updateItems, sortMethod, filterMethod }) {
   const [term, setTerm] = useState("");
   const [error, setError] = useState("");
   const [filter, setItemsFiltered] = useState([]);
@@ -45,6 +46,14 @@ function Items({ items, updateItems, sortMethod }) {
       showMessage(res.payload);
     }
   };
+
+  switch (filterMethod) {
+    case "chkd":
+    setItemsFiltered((filter) => { filter.filter((a) => a.checked === true) });
+      console.log(filter);
+      console.log(filterMethod); break;
+      default:
+  }
 
   let pages = [];
   if (term !== "") {
@@ -90,6 +99,7 @@ function Items({ items, updateItems, sortMethod }) {
   return (
     <>
       {error !== "" ? <p>{error}</p> : null}
+     
       <div className={styles.search_bar}>
         <form onSubmit={submitHandler}>
           <input
