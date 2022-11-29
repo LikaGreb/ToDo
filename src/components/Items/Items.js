@@ -9,7 +9,7 @@ import Pagination from "react-bootstrap/Pagination";
 
 const itemsOnPage = 5;
 
-function Items({ items, updateItems, sortMethod, filterMethod }) {
+function Items({ items, updateItems, sortMethod}) {
   const [term, setTerm] = useState("");
   const [error, setError] = useState("");
   const [filter, setItemsFiltered] = useState([]);
@@ -47,13 +47,7 @@ function Items({ items, updateItems, sortMethod, filterMethod }) {
     }
   };
 
-  switch (filterMethod) {
-    case "chkd":
-    setItemsFiltered((filter) => { filter.filter((a) => a.checked === true) });
-      console.log(filter);
-      console.log(filterMethod); break;
-      default:
-  }
+ 
 
   let pages = [];
   if (term !== "") {

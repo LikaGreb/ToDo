@@ -33,6 +33,13 @@ $md-radio-ripple-size: 15px;
   font-size: 1rem;
   
 }
-
-
+.checkBox{
+  display: flex;
+  font-size: 1rem;
+  justify-content: center;
+  gap: 40px;
+}
+.RadioButton{
+  display: flex;
+}
 

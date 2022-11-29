@@ -1,0 +1,19 @@
+.checkBox {
+ display: flex;
+ flex-direction: row;
+
+  label {
+    display: inline-block;
+    
+    position: relative;
+    padding: 0 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    vertical-align: bottom;
+  }
+  input{
+     margin: 0 5px 5px 5px;
+     padding-bottom: 5px;
+     height:26px;
+  }
+}

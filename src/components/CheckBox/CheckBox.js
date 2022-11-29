@@ -1,7 +1,9 @@
+import styles from "./CheckBox.module.scss"
+
 export const CheckBox = (props) => {
   const { changed, id, isSelected, label, value } = props;
   return (
-    <div >
+    <div className={styles.checkBox}>
       <input
         id={id}
         onChange={changed}

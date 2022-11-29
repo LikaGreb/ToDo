@@ -35,16 +35,38 @@ function ToDo() {
   const radioChangeHandler = (e) => {
     setSortMethod(e.target.value);
   };
-const checkChangeHandler = (e) => {
+  const checkChangeHandler = (e) => {
     setFilterMethod(e.target.value);
   };
+  const Filt = () => {
+    if (filterMethod === "chkd") {
+      return (
+        <Items
+          items={items.filter((a) => a.checked === true)}
+          updateItems={updateItems}
+          sortMethod={sortMethod}
+        />
+      );
+    } else if (filterMethod === "unchkd") {
+      return (
+        <Items
+          items={items.filter((a) => a.checked === false)}
+          updateItems={updateItems}
+          sortMethod={sortMethod}
+        />
+      );
+    } else { return (
+      <Items items={items} updateItems={updateItems} sortMethod={sortMethod} />);
+    }
+  };
+
   return (
     <section>
       <div className="container">
         <h1 className={styles.title}>Додати нову задачу:</h1>
         <div className={styles.radio}>
           <p>Відсортувати задачі за:</p>
-          <div className={styles.RadioButton} style={{ display: "flex" }}>
+          <div className={styles.RadioButton}>
             <RadioButton
               changed={radioChangeHandler}
               id="1"
@@ -62,7 +84,7 @@ const checkChangeHandler = (e) => {
             />
           </div>
         </div>
-<div className={styles.checkBox}>
+        <div className={styles.checkBox}>
           <p>Фільтрувати задачі за виконанням:</p>
           <div style={{ display: "flex" }}>
             <CheckBox
@@ -92,7 +114,7 @@ const checkChangeHandler = (e) => {
 
         <div className={styles.todoWrap}>
           <AddItem updateItems={updateItems} />
-          <Items items={items} updateItems={updateItems} sortMethod={sortMethod} filterMethod={filterMethod}/>
+          <Filt />
         </div>
       </div>
     </section>
