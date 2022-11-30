@@ -21,7 +21,7 @@ function Header({ toggleLogin}) {
       <div className="container">
         <div className={styles.header} onClick={logoutFunction}>
           <p className={styles.loginName}>{localStorage.getItem("loginField")}</p>
-          <Button variant="primary">Logout</Button>
+         {localStorage.token? <Button variant="primary">Logout</Button> : null} 
           
         </div>
       </div>
