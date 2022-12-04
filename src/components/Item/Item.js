@@ -11,18 +11,11 @@ import { store } from "../../store";
 
 class Item extends Component {
   state = {
-    //item: this.props.item,
-    //id: this.props.id,
-    //checked: false,
-    // text: "",
-    // },
     isEdit: false,
-    //textField: this.props.item.text,
+    textField: this.props.item.text,
     mess: ""
   };
 
-  // const [isEdit, setIsEdit] = useState(false);
-  // const textField = useFormField(item.text);
   showMessage = (message) => {
     this.setState((prev) => { return { ...prev, mess: message } });
     setTimeout(() => {
@@ -32,25 +25,24 @@ class Item extends Component {
 
   editItem = async (id, checked, text) => {
     const res = await store.dispatch(fetchItemEdit(text, id, checked))
-    // console.log(res, "1111");
-    // console.log(this.state, "this.state");
-    console.log(this.textField, "this.textField");
-    console.log(this.props.item, "this.props.item");
     if (res.type === "ITEM_EDIT") {
-      this.state.isEdit = true;
+      //this.state.isEdit = true;
       this.props.updateItems(res.payload);
     } else {
-      this.state.isEdit = false;
+      //this.state.isEdit = false;
       this.showMessage(res.payload)
     }
+    this.setIsEdit(false);
+  };
+
+
+
+  setIsEdit = (isEditVal) => {
+    this.setState((prevState) => {
+      return { ...prevState, isEdit: isEditVal };
+    });
   };
   
-    
-  
-  setIsEdit = (isEdit) => {
-    //this.state.isEdit = true;
-    isEdit = ((prev) => !prev)
-  }
 
   deleteItem = async (id) => {
     const res = await store.dispatch(fetchDeleteItem(id));
@@ -63,18 +55,11 @@ class Item extends Component {
   };
   keyPressHandler = (e) => {
     if (e.key === "Enter") {
-      this.editItem(this.props.item.id, this.props.item.checked, this.textField.value);
-      // this.setisEdit();
-      console.log("keyPressHandler")
-    }
+      this.editItem(this.props.item.id, this.props.item.checked, this.state.textField);
+      }
   };
 
-  // componentDidMount() {
-  //   this.getItems();
-  // }
-
   render() {
-
     return (
       <li className={styles.item}>
         <Form.Check
@@ -89,22 +74,26 @@ class Item extends Component {
         ) : (
           <Form.Control
             type="text"
-            defaultValue={this.props.item.text}
-            {...this.textField}
+              value={this.state.textField}
+              onChange={(e) => {
+                this.setState((prev) => {
+                  return { ...prev, textField:e.target.value }
+                })
+              }}
             onKeyPress={this.keyPressHandler}
           />
         )}
         <Button
           variant="outline-warning"
           onClick={() => {
-            this.editItem(this.props.item.id, this.props.item.checked, this.props.item.text);
+            this.setIsEdit(true);
           }}
         >
           Edit
         </Button>
         <Button
           variant="outline-success"
-          onClick={() => this.editItem(this.props.item.id, this.props.item.checked, this.textField.value)}
+          onClick={() => this.editItem(this.props.item.id, this.props.item.checked, this.state.textField)}
 
         >
           Save
