@@ -22,9 +22,10 @@ const items = store.getState().itemReducer;
       });
     }
     if (filter.length===0) {
-      
+      console.log("нема збігів");
       return dispatch({
-        type: searchTypes.SEARCH_ERROR_NO_MATHES, payload: "Нема збігів"
+        type: searchTypes.SEARCH_ERROR_NO_MATHES, payload: "Нема збігів",
+        
       });
     }
     

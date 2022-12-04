@@ -7,21 +7,19 @@ import Layout from "./components/Layout/Layout";
 import "./App.scss";
 import ToDo from './components/ToDo/ToDo';
 //import styles from "./components/Modal/Modal.module.scss"
-//import { Try } from './components/Try2.js/Try';
-//import { render } from '@testing-library/react';
+
 
 
 export class App extends Component {
   state = {
     isLogin: checkLoginFunction()
   }
-  //const [isLogin, setIsLogin] = useState(checkLoginFunction());
-  //const [isOpen, setIsOpen] = useState(false);
+ 
   toggleLogin = (data) => {
     this.setState((state) => ({
       isLogin: state.isLogin = data
     }));
-    //setIsLogin(data)
+    
   }
 
   // if (!isLogin) {

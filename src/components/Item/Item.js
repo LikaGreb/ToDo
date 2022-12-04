@@ -1,85 +1,120 @@
 
-import { useState } from "react";
+import { Component } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import useFormField from "../../common/useFieldsFunction";
+//import useFormField from "../../common/useFieldsFunction";
 import { fetchDeleteItem } from "../../store/dispatches/itemDelete.dispatch";
 import { fetchItemEdit } from "../../store/dispatches/itemEdit.dispatch";
 import styles from "./Item.module.scss";
 import { store } from "../../store";
 
-function Item({ item, updateItems, messageError }) {
-  const [isEdit, setIsEdit] = useState(false);
-  const textField = useFormField(item.text);
-  
-  const editItem = async (id, checked, text) => {
-    const res = await store.dispatch(fetchItemEdit(text, id, checked))
-    console.log(res);
-    if (res.type==="ITEM_EDIT") {
-        updateItems(res.payload);
-    
-    } else {
-      setIsEdit(false);
-      messageError(res.payload)
-     }
+
+class Item extends Component {
+  state = {
+    //item: this.props.item,
+    //id: this.props.id,
+    //checked: false,
+    // text: "",
+    // },
+    isEdit: false,
+    //textField: this.props.item.text,
+    mess: ""
   };
 
- const deleteItem = async (id) => {
+  // const [isEdit, setIsEdit] = useState(false);
+  // const textField = useFormField(item.text);
+  showMessage = (message) => {
+    this.setState((prev) => { return { ...prev, mess: message } });
+    setTimeout(() => {
+      this.setState((prev) => { return { ...prev, mess: "" } });
+    }, 3000);
+  };
+
+  editItem = async (id, checked, text) => {
+    const res = await store.dispatch(fetchItemEdit(text, id, checked))
+    // console.log(res, "1111");
+    // console.log(this.state, "this.state");
+    console.log(this.textField, "this.textField");
+    console.log(this.props.item, "this.props.item");
+    if (res.type === "ITEM_EDIT") {
+      this.state.isEdit = true;
+      this.props.updateItems(res.payload);
+    } else {
+      this.state.isEdit = false;
+      this.showMessage(res.payload)
+    }
+  };
+  
+    
+  
+  setIsEdit = (isEdit) => {
+    //this.state.isEdit = true;
+    isEdit = ((prev) => !prev)
+  }
+
+  deleteItem = async (id) => {
     const res = await store.dispatch(fetchDeleteItem(id));
     if (res.type === "ITEM_DELETE") {
-      updateItems(res.payload);
+      this.props.updateItems(res.payload);
+
     } else {
       console.log(res.payload);
     }
   };
-  const keyPressHandler = (e) => {
+  keyPressHandler = (e) => {
     if (e.key === "Enter") {
-      editItem(item.id, item.checked, textField.value);
+      this.editItem(this.props.item.id, this.props.item.checked, this.textField.value);
+      // this.setisEdit();
+      console.log("keyPressHandler")
     }
   };
 
-  return (
-    <li className={styles.item}>
-      <Form.Check
-        type="checkbox"
-        checked={item.checked}
-        onChange={() => editItem(item.id, !item.checked, item.text)}
-      />
-      {!isEdit ? (
-        <p
-          className={
-            item.checked ? `${styles.text} ${styles.checked}` : styles.text
-          }
-        >
-          {item.text}
-        </p>
-      ) : (
-        <Form.Control
-          type="text"
-          value={item.text}
-          {...textField}
-          onKeyPress={keyPressHandler}
-        />
-      )}
-      <Button
-        variant="outline-warning"
-        onClick={() => {
-          setIsEdit((prev) => !prev);
-        }}
-      >
-        Edit
-      </Button>
-      <Button
-        variant="outline-success"
-        onClick={() => editItem(item.id, item.checked, textField.value)}
-      >
-        Save
-      </Button>
-      <Button variant="outline-danger" onClick={() => deleteItem(item.id)}>
-        Delete
-      </Button>
-    </li>
-  );
-}
+  // componentDidMount() {
+  //   this.getItems();
+  // }
 
+  render() {
+
+    return (
+      <li className={styles.item}>
+        <Form.Check
+          type="checkbox"
+          checked={this.props.item.checked}
+          onChange={() => this.editItem(this.props.item.id, !this.props.item.checked, this.props.item.text)}
+        />
+        {!this.state.isEdit ? (
+          <p className={this.props.item.checked ? `${styles.text} ${styles.checked}` : styles.text}>
+            {this.props.item.text}
+          </p>
+        ) : (
+          <Form.Control
+            type="text"
+            defaultValue={this.props.item.text}
+            {...this.textField}
+            onKeyPress={this.keyPressHandler}
+          />
+        )}
+        <Button
+          variant="outline-warning"
+          onClick={() => {
+            this.editItem(this.props.item.id, this.props.item.checked, this.props.item.text);
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          variant="outline-success"
+          onClick={() => this.editItem(this.props.item.id, this.props.item.checked, this.textField.value)}
+
+        >
+          Save
+        </Button>
+        <Button variant="outline-danger"
+          onClick={() => this.deleteItem(this.props.item.id)}>
+          Delete
+        </Button>
+      </li>
+    );
+  }
+}
 export default Item;
