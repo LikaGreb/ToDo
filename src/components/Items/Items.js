@@ -24,9 +24,9 @@ class Items extends Component {
     }, 3000);
   };
 
-  messageError = (message) => {
-    this.showMessage(message);
-  };
+  // messageError = (message) => {
+  //   this.showMessage(message);
+  // };
 
 
 
@@ -56,17 +56,20 @@ class Items extends Component {
           </form>
         </div>
         <div>
-          <ul className={styles.items}>
-            {this.props.items.map((item, i) => (
-              <Item
-                key={`${item.text}-${i}`}
-                item={item}
-                updateItems={this.props.updateItems}
-                messageError={this.messageError}
-              />
-            ))
-            }
-          </ul>
+          {this.props.items.length === 0 ? (
+            <p>No data</p>
+          ) : (
+            <ul className={styles.items}>
+              {this.props.items.map((item, i) => (
+                <Item
+                  key={`${item.text}-${i}`}
+                  item={item}
+                  updateItems={this.props.updateItems}
+                  showMessage={this.showMessage}
+                />
+              ))
+              }
+            </ul>)}
         </div>
       </>
     );

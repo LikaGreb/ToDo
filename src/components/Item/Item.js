@@ -26,10 +26,8 @@ class Item extends Component {
   editItem = async (id, checked, text) => {
     const res = await store.dispatch(fetchItemEdit(text, id, checked))
     if (res.type === "ITEM_EDIT") {
-      //this.state.isEdit = true;
       this.props.updateItems(res.payload);
     } else {
-      //this.state.isEdit = false;
       this.showMessage(res.payload)
     }
     this.setIsEdit(false);

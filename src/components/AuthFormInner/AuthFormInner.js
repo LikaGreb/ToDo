@@ -1,22 +1,32 @@
+import { Component } from "react";
 import Form from "react-bootstrap/Form";
-import styles from './AuthFormInner.module.scss';
 
-function AuthFormInner({loginField, passField, error}) {
+class AuthFormInner extends Component {
+   
+  render() {
+    const { login, getLogin } = this.props.loginField;
+    const { pass, getPass } = this.props.passField;
 
-  return (
-    <>
-      {error !== '' ? <p className={styles.error}>{error}</p> : null}
-      <Form.Group className="mb-3">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="text" placeholder="Enter login" {...loginField} />
-      </Form.Group>
+    return (
+      <>
+        <Form.Group className="mb-3">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="text" placeholder="Enter login"
+            value={login}
+            onChange={(e) => getLogin(e.target.value)}
+           />
+        </Form.Group>
 
-      <Form.Group className="mb-3" >
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" {...passField}/>
-      </Form.Group>
-    </>
-  );
+        <Form.Group className="mb-3" >
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password"
+            value={pass}
+          onChange={(e) => getPass(e.target.value)} 
+            />
+        </Form.Group>
+      </>
+    );
+  }
 }
 
 export default AuthFormInner;

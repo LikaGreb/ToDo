@@ -1,50 +1,70 @@
-import { useState } from "react";
+import { Component } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import useFormField from "../../common/useFieldsFunction";
 import { store } from "../../store";
 import { fetchReg } from "../../store/dispatches/register.dispatch";
 import AuthFormInner from "../AuthFormInner/AuthFormInner";
 
-function Register({ toggleLogin }) {
-  const loginField = useFormField();
-  const passField = useFormField();
-  const [error, setError] = useState("");
-
-  const showMessage = (message) => {
-    setError(message);
+//toggleLogin
+class Register extends Component {
+  state = {
+    error: "",
+    login: "",
+    pass: ""
+  }
+  // const loginField = useFormField();
+  // const passField = useFormField();
+  // const [error, setError] = useState("");
+  getLogin = (login) => {
+    this.setState({ login });
+  };
+  getPass = (pass) => {
+    this.setState({ pass });
+  };
+  showMessage = (message) => {
+    this.setState((prev) => { return { ...prev, error: message } });
     setTimeout(() => {
-      setError("");
+      this.setState((prev) => { return { ...prev, error: "" } });
     }, 3000);
   };
 
-  const registerFunction = async (e) => {
+  registerFunction = async (e) => {
     e.preventDefault();
-
-    const user = { login: loginField.value, pass: passField.value };
-    const data = await store.dispatch(fetchReg(user.login, user.pass));
+  
+    const data = await store.dispatch(fetchReg(this.state.login, this.state.pass));
     if (data.type === "AUTH_SUCCESS") {
-      toggleLogin(true);
+      this.props.toggleLogin(true);
     } else {
-      showMessage(data.payload);
+      this.showMessage(data.payload);
     }
   };
-  return (
-    <section className="login">
-      <div className="container">
-        <Form>
-          <AuthFormInner
-            loginField={loginField}
-            passField={passField}
-            error={error}
-          />
-          <Button variant="primary" type="submit" onClick={registerFunction}>
-            Register
-          </Button>
-        </Form>
-      </div>
-    </section>
-  );
+  render() {
+    const loginField = {
+      login: this.state.login,
+      getLogin:this.getLogin
+    };
+    const passField = {
+      pass: this.state.pass,
+      getPass:this.getPass
+    };
+    return (
+      <section className="login">
+        <div className="container">
+          {this.state.error !== "" ? <p>{this.state.error}</p> : null}
+          <Form>
+            <AuthFormInner
+              loginField={loginField}
+              passField={passField}
+              error={this.state.error}
+            />
+            <Button variant="primary" type="submit"
+              onClick={this.registerFunction}>
+              Register
+            </Button>
+          </Form>
+        </div>
+      </section>
+    );
+  }
 }
-
 export default Register;
