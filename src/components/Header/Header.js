@@ -1,30 +1,32 @@
+import { Component } from "react";
 import { Button } from "react-bootstrap";
 import { store } from "../../store";
 import { fetchLogout } from "../../store/dispatches/logout.dispatch";
 import styles from "./Header.module.scss";
 
-function Header({ toggleLogin }) {
+class Header extends Component {
 
-  // Приймаємо глобальні значення lang  за допомогою хука useContext
-  const logoutFunction = async () => {
+ 
+   logoutFunction = async () => {
     const data = await store.dispatch(fetchLogout());
 
     if (data.type === "LOGOUT_SUCCESS") {
-      toggleLogin(false);
+      this.props.toggleLogin(false);
       return;
     } else {
       console.log(data.payload);
     }
   };
-  return (
-    <header>
-      <div className="container">
-        <div className={styles.header} onClick={logoutFunction}>
-          <Button variant="primary">Logout</Button>
+  render() {
+    return (
+      <header>
+        <div className="container">
+          <div className={styles.header} onClick={this.logoutFunction}>
+            <Button variant="primary">Logout</Button>
+          </div>
         </div>
-      </div>
-    </header>
-  );
+      </header>
+    );
+  }
 }
-
 export default Header;

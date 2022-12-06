@@ -8,13 +8,15 @@ class Items extends Component {
   state = {
     term: "",
     error: "",
+
   }
 
   reset = () => {
     this.setState((prev) => {
       return { ...prev, term: "" }
     });
-    this.props.filterHandler("");
+
+    this.props.getItems();
   };
 
   showMessage = (message) => {
@@ -23,12 +25,6 @@ class Items extends Component {
       this.setState((prev) => { return { ...prev, error: "" } });
     }, 3000);
   };
-
-  // messageError = (message) => {
-  //   this.showMessage(message);
-  // };
-
-
 
   render() {
     return (

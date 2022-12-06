@@ -5,16 +5,14 @@ import { store } from "../../store";
 import { fetchReg } from "../../store/dispatches/register.dispatch";
 import AuthFormInner from "../AuthFormInner/AuthFormInner";
 
-//toggleLogin
+
 class Register extends Component {
   state = {
     error: "",
     login: "",
     pass: ""
   }
-  // const loginField = useFormField();
-  // const passField = useFormField();
-  // const [error, setError] = useState("");
+  
   getLogin = (login) => {
     this.setState({ login });
   };
@@ -30,7 +28,7 @@ class Register extends Component {
 
   registerFunction = async (e) => {
     e.preventDefault();
-  
+
     const data = await store.dispatch(fetchReg(this.state.login, this.state.pass));
     if (data.type === "AUTH_SUCCESS") {
       this.props.toggleLogin(true);
@@ -41,11 +39,11 @@ class Register extends Component {
   render() {
     const loginField = {
       login: this.state.login,
-      getLogin:this.getLogin
+      getLogin: this.getLogin
     };
     const passField = {
       pass: this.state.pass,
-      getPass:this.getPass
+      getPass: this.getPass
     };
     return (
       <section className="login">

@@ -2,7 +2,6 @@
 import { Component } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-//import useFormField from "../../common/useFieldsFunction";
 import { fetchDeleteItem } from "../../store/dispatches/itemDelete.dispatch";
 import { fetchItemEdit } from "../../store/dispatches/itemEdit.dispatch";
 import styles from "./Item.module.scss";

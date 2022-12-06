@@ -13,7 +13,8 @@ class ToDo extends Component {
   state = {
     items: [],
     active: 1,
-    error: ""
+    error: "",
+   
   }
 
   getItems = async () => {
@@ -26,6 +27,9 @@ class ToDo extends Component {
   }
 
   updateItems = (isUpdate) => {
+    if (this.state.items.length === 0) {
+      return;
+    }
     if (isUpdate) {
       this.getItems();
     }
@@ -39,7 +43,7 @@ class ToDo extends Component {
   };
 
   filterHandler = async (term) => {
-    if (term === "") {
+    if (term === ""&& this.state.counter>0) {
       this.showMessage("Пусте значення")
       this.getItems();
       return;
@@ -94,6 +98,7 @@ class ToDo extends Component {
               this.state.active * itemsOnPage)}
               updateItems={this.updateItems}
               filterHandler={this.filterHandler}
+              getItems={this.getItems}
             />
 
           </div>
